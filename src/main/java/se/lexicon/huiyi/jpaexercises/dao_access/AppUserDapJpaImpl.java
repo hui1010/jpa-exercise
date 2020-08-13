@@ -6,8 +6,6 @@ import se.lexicon.huiyi.jpaexercises.entity.AppUser;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -20,13 +18,7 @@ public class AppUserDapJpaImpl implements AppUserDao {
 
     @Override
     public Optional<AppUser> findById(int id) {
-//        Optional<AppUser> result = Optional.empty();
-//        for (AppUser a : appUsers){
-//            if (a.getUserId()== id){
-//                result = Optional.ofNullable(a);
-//            }
-//        }
-//        return result;
+
         return Optional.ofNullable(entityManager.find(AppUser.class, id));
     }
 

@@ -14,7 +14,7 @@ class AppUserTest {
     @BeforeEach
     void setUp() {
         user = new AppUser("Bowser", "test", "Tester",
-                LocalDate.parse("2000-01-01"), false, null);
+                LocalDate.parse("2000-01-01"), null);
     }
 
     @Test
@@ -31,14 +31,14 @@ class AppUserTest {
     @Test
     void testEquals() {
         AppUser copy = new AppUser("Bowser", "test", "Tester",
-                LocalDate.parse("2000-01-01"), false, null);
+                LocalDate.parse("2000-01-01"), null);
         assertEquals(user, copy);
     }
 
     @Test
     void testHashcode() {
         AppUser copy = new AppUser("Bowser", "test", "Tester",
-                LocalDate.parse("2000-01-01"), false, null);
+                LocalDate.parse("2000-01-01"), null);
         assertEquals(user.hashCode(), copy.hashCode());
     }
 

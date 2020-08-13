@@ -23,12 +23,11 @@ public class AppUser {
     protected AppUser() {
     }
 
-    public AppUser(String userName, String firstName, String lastName, LocalDate birthDate, boolean active, String password) {
+    public AppUser(String userName, String firstName, String lastName, LocalDate birthDate, String password) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
-        this.active = active;
         this.password = password;
     }
 

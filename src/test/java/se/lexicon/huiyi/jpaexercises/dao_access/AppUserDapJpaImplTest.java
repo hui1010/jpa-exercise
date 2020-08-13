@@ -35,9 +35,9 @@ class AppUserDapJpaImplTest {
     @BeforeEach
     void setUp() {
 
-        user1 = entityManager.persistAndFlush(new AppUser("one", "test1", "Tester1", null, true, null));
-        user2 = entityManager.persistAndFlush(new AppUser("two", "test2", "Tester2", LocalDate.of(2020,2,2), true, null));
-        user3 = entityManager.persistAndFlush(new AppUser("three", "test3", "Tester3", LocalDate.of(2020,3,3), false, null));
+        user1 = entityManager.persistAndFlush(new AppUser("one", "test1", "Tester1", null,  null));
+        user2 = entityManager.persistAndFlush(new AppUser("two", "test2", "Tester2", LocalDate.of(2020,2,2),  null));
+        user3 = entityManager.persistAndFlush(new AppUser("three", "test3", "Tester3", LocalDate.of(2020,3,3), null));
 
         assertNotNull(user1);
         assertNotNull(user2);
@@ -48,7 +48,7 @@ class AppUserDapJpaImplTest {
 
     @Test
     void update() {
-        user1 = new AppUser("one", "test1", "Tester1", LocalDate.of(2000,1,1), true, null);
+        user1 = new AppUser("one", "test1", "Tester1", LocalDate.of(2000,1,1),  null);
         test.update(user1);
         assertNotNull(user1.getBirthDate());
         assertEquals("2000-01-01", user1.getBirthDate().toString());
