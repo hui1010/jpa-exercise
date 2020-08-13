@@ -124,7 +124,7 @@ class TodoItemDaoJpaImplTest {
         List<TodoItem> actual = test.findByDeadLineBetween(
                 LocalDateTime.parse("2018-10-23T17:19:34"),//one second after one.getDeadline
                 LocalDateTime.parse("2020-12-23T17:19:34"));//one second after three.getDeadline
-        //should be 2: two and three
+        //should be 2 results: two and three
         assertEquals(2, actual.size());
         assertTrue(actual.contains(two));
         assertTrue(actual.contains(three));
