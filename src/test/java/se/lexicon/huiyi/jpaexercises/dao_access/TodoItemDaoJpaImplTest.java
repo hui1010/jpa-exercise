@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.huiyi.jpaexercises.entity.TodoItem;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -108,5 +109,59 @@ class TodoItemDaoJpaImplTest {
         test.save(three);
 
         assertEquals(2, test.findByDone().size());
+    }
+
+    @Test
+    void findByDeadLineBetween() {
+        one.setDeadline(LocalDateTime.parse("2018-10-23T17:19:33"));
+        two.setDeadline(LocalDateTime.parse("2019-11-23T17:19:33"));
+        three.setDeadline(LocalDateTime.parse("2020-12-23T17:19:33"));
+
+        test.save(one);
+        test.save(two);
+        test.save(three);
+
+        List<TodoItem> actual = test.findByDeadLineBetween(
+                LocalDateTime.parse("2018-10-23T17:19:34"),//one second after one.getDeadline
+                LocalDateTime.parse("2020-12-23T17:19:34"));//one second after three.getDeadline
+        //should be 2: two and three
+        assertEquals(2, actual.size());
+        assertTrue(actual.contains(two));
+        assertTrue(actual.contains(three));
+    }
+
+    @Test
+    void findByDeadLineBefore() {
+
+        one.setDeadline(LocalDateTime.parse("2018-10-23T17:19:33"));
+        two.setDeadline(LocalDateTime.parse("2019-11-23T17:19:33"));
+        three.setDeadline(LocalDateTime.parse("2020-12-23T17:19:33"));
+
+        test.save(one);
+        test.save(two);
+        test.save(three);
+
+        List<TodoItem> actual = test.findByDeadLineBefore(LocalDateTime.parse("2019-11-23T17:19:33"));
+        //should be 1 result, one
+        assertEquals(1, actual.size());
+        assertTrue(actual.contains(one));
+
+    }
+
+    @Test
+    void findByDeadLineAfter() {
+        one.setDeadline(LocalDateTime.parse("2018-10-23T17:19:33"));
+        two.setDeadline(LocalDateTime.parse("2019-11-23T17:19:33"));
+        three.setDeadline(LocalDateTime.parse("2020-12-23T17:19:33"));
+
+        test.save(one);
+        test.save(two);
+        test.save(three);
+
+        List<TodoItem> actual = test.findByDeadLineAfter(LocalDateTime.parse("2019-11-23T17:19:32"));
+        //should be 2, two and three
+        assertEquals(2, actual.size());
+        assertTrue(actual.contains(two));
+        assertTrue(actual.contains(three));
     }
 }

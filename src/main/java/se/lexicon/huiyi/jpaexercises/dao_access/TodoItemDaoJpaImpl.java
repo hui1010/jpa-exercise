@@ -7,6 +7,7 @@ import se.lexicon.huiyi.jpaexercises.entity.TodoItem;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +65,35 @@ public class TodoItemDaoJpaImpl implements TodoItemDao {
     public List<TodoItem> findByDone() {
         List<TodoItem> results;
         Query query = entityManager.createQuery("SELECT t From TodoItem t WHERE t.done = 'true'");
+        results = query.getResultList();
+        return results;
+    }
+
+    @Override
+    public List<TodoItem> findByDeadLineBetween(LocalDateTime start, LocalDateTime end) {
+        List<TodoItem> results;
+        Query query = entityManager.createQuery("SELECT t From TodoItem t WHERE t.deadline BETWEEN :start AND :end");
+        query.setParameter("start", start);
+        query.setParameter("end", end);
+        results = query.getResultList();
+        return results;
+
+    }
+
+    @Override
+    public List<TodoItem> findByDeadLineBefore(LocalDateTime end) {
+        List<TodoItem> results;
+        Query query = entityManager.createQuery("SELECT t From TodoItem t WHERE t.deadline < :end");
+        query.setParameter("end", end);
+        results = query.getResultList();
+        return results;
+    }
+
+    @Override
+    public List<TodoItem> findByDeadLineAfter(LocalDateTime start) {
+        List<TodoItem> results;
+        Query query = entityManager.createQuery("SELECT t From TodoItem t WHERE t.deadline > :start");
+        query.setParameter("start", start);
         results = query.getResultList();
         return results;
     }
